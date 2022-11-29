@@ -1,24 +1,41 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import AppContenues from './Components/AppContenues';
+import AppEntete from './Components/AppEntete';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Modal from './Components/Modal';
 
 function App() {
+  // const initialeState = JSON.parse(localStorage.getItem("taches")) || [];
+  const [taches, setTaches] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState(false);
+  const [filterStatus, setFilterStatus] = useState("pasAccomplir")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App">
+        <Modal modalVisible ={modalVisible} setModalVisible={setModalVisible}
+        modalContent={modalContent}
+        />
+        <div className='App1'>  
+          <h1 className="title">TODO LIST</h1>
+          <div>
+            <AppEntete  modalVisible ={modalVisible} setModalVisible={setModalVisible}
+            setModalContent={setModalContent} tacheManager={{taches, setTaches}} filterStatus={filterStatus} setFilterStatus={setFilterStatus}/>
+            <AppContenues taches={taches} setTaches={setTaches}
+            setModalVisible={setModalVisible} 
+            setModalContent={setModalContent}
+            tacheManager={{taches, setTaches}}
+            
+            />
+          </div>
+        </div>
+      </div>
+      <ToastContainer className='toaster'/>
+    </>
+    
   );
 }
 
